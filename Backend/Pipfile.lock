@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3432fa2f7331fb6c6411ec1ce30279533ce7e88391d3808e33442a30b1104dbc"
+            "sha256": "4a248873f446586760e60f985f8a0246cd5f6621b0d7e5d38e4a07af96677111"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -149,6 +149,14 @@
             "markers": "python_version >= '3.6'",
             "version": "==0.24.2"
         },
+        "passlib": {
+            "hashes": [
+                "sha256:aa6bca462b8d8bda89c70b382f0c298a20b5560af6cbfa2dce410c0a2fb669f1",
+                "sha256:defd50f72b65c5402ab2c573830a6978e5f202ad0d984793c8dde2c4152ebe04"
+            ],
+            "index": "pypi",
+            "version": "==1.7.4"
+        },
         "pymongo": {
             "hashes": [
                 "sha256:01721da74558f2f64a9f162ee063df403ed656b7d84229268d8e4ae99cfba59c",
@@ -221,6 +229,13 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==4.2.0"
+        },
+        "uuid": {
+            "hashes": [
+                "sha256:1f87cc004ac5120466f36c5beae48b4c48cc411968eed0eaecd3da82aa96193f"
+            ],
+            "index": "pypi",
+            "version": "==1.30"
         },
         "werkzeug": {
             "hashes": [

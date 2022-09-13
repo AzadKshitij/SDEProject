@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-mongoengine = "*"
+uuid = "*"
+passlib = "*"
 
 [dev-packages]
 autopep8 = "*"

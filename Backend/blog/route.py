@@ -2,6 +2,9 @@ from blog import app
 import json
 from blog.model import Author
 
+# Routes
+from blog.user.routes import *  # noqa
+
 
 @app.route('/')
 def index():
