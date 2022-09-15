@@ -2,7 +2,7 @@ from blog import app
 from blog.user.model import User
 
 
-@app.route('/user/signup', methods=['POST'])
+@app.route('/user/signup', methods=['POST', 'GET'])
 def signup():
     return User().signup()
 

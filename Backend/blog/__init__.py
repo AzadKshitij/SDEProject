@@ -1,5 +1,4 @@
 from flask import Flask
-import json
 import flask_mongoengine as mongoengine
 
 # Connect to MongoDB
@@ -9,7 +8,9 @@ app.config['MONGODB_SETTINGS'] = {
     'host': 'localhost',
     'port': 27017
 }
+# set secret key
+app.secret_key = 'secret_key'
 db = mongoengine.MongoEngine(app)
 
 
-from blog import route
+from blog import route  # noqa
