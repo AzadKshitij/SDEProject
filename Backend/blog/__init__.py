@@ -4,14 +4,15 @@ import os
 
 # Connect to MongoDB
 app = Flask(__name__)
-# app.config['MONGODB_SETTINGS'] = {
-#     'db': 'blog',
-#     'host': 'mongodb',
-#     'port': 27017,
-#     'username': 'bloguser',
-#     'password': 'pwd',
-# }
-app.config["MONGO_URI"] = 'mongodb://bloguser:pwd@mongodb:27017/blog'
+app.config['MONGODB_SETTINGS'] = {
+    'db': 'blog',
+    'host': 'mongodb',
+    'port': 27017,
+    'username': 'root',
+    'password': 'pass',
+    'authSource': 'admin'
+}
+# app.config["MONGO_URI"] = 'mongodb://bloguser:pwd@mongodb:27017/blog'
 # app.config["MONGO_URI"] = 'mongodb://' + os.environ['MONGODB_USERNAME'] + ':' + os.environ['MONGODB_PASSWORD'] + '@' + os.environ['MONGODB_HOSTNAME'] + ':27017/' + os.environ['MONGODB_DATABASE']
 
 

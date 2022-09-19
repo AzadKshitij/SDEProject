@@ -24,14 +24,8 @@ services:
 
   db:
     image: mongo:latest
-    restart: always
-    container_name: mongodb
     hostname: mongodb
-    # environment:
-    #   - MONGODB_DATABASE=flaskdb
-    #   - MONGODB_USERNAME=flaskuser
-    #   - MONGODB_PASSWORD=your_mongodb_password
-    #   - MONGODB_HOSTNAME=mongodb
-    # environment:
-    #   MONGO_INITDB_ROOT_USERNAME: root
-    #   MONGO_INITDB_ROOT_PASSWORD: example
+    environment:
+      - MONGO_INITDB_DATABASE=blog
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass

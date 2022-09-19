@@ -67,5 +67,5 @@ class User(db.Document):
     def get_all_users(self):
         return User.objects().all()
 
-    def get_user(self, email:str):
+    def get_user(email:str):
         return User.objects(email=email).first()

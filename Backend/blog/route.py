@@ -9,7 +9,7 @@ from blog.post.routes import *  # noqa
 
 @app.route('/')
 def index():
-    posts = User().get_all_users()
+    posts = User.objects().all()
     return posts
 
 

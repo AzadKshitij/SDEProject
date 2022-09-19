@@ -28,7 +28,7 @@ class Post(db.Document):
         user = {
             "title": self.title,
             "content": self.content,
-            "userId": self.userId,
+            "userId": self.userId.to_json(),
             "summary": self.summary,
             "slug": self.slug,
             "publishedAt": self.publishedAt
@@ -36,7 +36,12 @@ class Post(db.Document):
         return jsonify(user)
 
     def submit_post(self):
-        self.save()
+        post = Post.objects(slug=self.slug).first()
+        if post:
+            return {"error": "Post already exists", "status": 400}
+        else:
+            self.save()
+            return {"success": "Post created successfully", "status": 200}
     
     def get_post(self, slug):
         return Post.objects(_id=slug).first()
