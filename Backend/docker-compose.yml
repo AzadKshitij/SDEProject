@@ -1,0 +1,37 @@
+version: '3.1'
+services:
+  web:
+    build: .
+    container_name: blog
+    command: python -u run.py
+    ports:
+      - "5000:5000"
+    
+    volumes:
+      - .:/app
+    
+    links:
+      - db
+
+    environment:
+      - FLASK_APP=run.py
+      - FLASK_DEBUG=1
+      - FLASK_RUN_HOST=
+      - FLASK_RUN_PORT=5000
+      - FLASK_RUN_CERT=adhoc
+      - FLASK_RUN_KEY=adhoc
+      - FLASK_RUN_NO_RELOAD=0
+
+  db:
+    image: mongo:latest
+    restart: always
+    container_name: mongodb
+    hostname: mongodb
+    # environment:
+    #   - MONGODB_DATABASE=flaskdb
+    #   - MONGODB_USERNAME=flaskuser
+    #   - MONGODB_PASSWORD=your_mongodb_password
+    #   - MONGODB_HOSTNAME=mongodb
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: root
+    #   MONGO_INITDB_ROOT_PASSWORD: example

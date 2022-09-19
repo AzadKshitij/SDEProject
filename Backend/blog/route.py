@@ -4,11 +4,12 @@ from blog.model import Author
 
 # Routes
 from blog.user.routes import *  # noqa
+from blog.post.routes import *  # noqa
 
 
 @app.route('/')
 def index():
-    posts = json.load(open('blog/posts.json')).get('posts')
+    posts = User().get_all_users()
     return posts
 
 

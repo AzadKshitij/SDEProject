@@ -28,7 +28,8 @@ class User(db.Document):
         return jsonify(user), 200
 
     def signup(self):
-        print(request.form)
+        # print("0--------------")
+        # print(request.get_json()["name"])
 
         # Create the user object
         user = {
@@ -62,3 +63,9 @@ class User(db.Document):
             return self.start_session(user)
 
         return jsonify({"error": "Invalid login credentials"}), 401
+
+    def get_all_users(self):
+        return User.objects().all()
+
+    def get_user(self, email:str):
+        return User.objects(email=email).first()
