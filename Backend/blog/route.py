@@ -9,8 +9,9 @@ from blog.post.routes import *  # noqa
 
 @app.route('/')
 def index():
-    posts = User.objects().all()
-    return posts
+    # posts = User.objects().all()
+
+    return "Welcome to the blog"
 
 
 @app.route('/post/<int:post_id>')
