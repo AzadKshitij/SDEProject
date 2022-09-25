@@ -1,6 +1,7 @@
 from blog import app
 import json
-from blog.model import Author
+
+from blog.user.model import User
 
 # Routes
 from blog.user.routes import *  # noqa
@@ -11,24 +12,30 @@ from blog.post.routes import *  # noqa
 def index():
     # posts = User.objects().all()
 
-    return "Welcome to the blog"
+    return "<a href='/user/login'>Login</a>"
+
+
+@app.route('/test')
+def test():
+    print("sdj ashdkjs dhkasdk kaskjdh kjasdhkjahd")
+    return User.objects().all().to_json()
 
 
 @app.route('/post/<int:post_id>')
 def post(post_id):
     post = json.load(open('blog/posts.json')).get('posts')[post_id]
 
-    author = Author.objects(name=post.get('author').get('name')).first()
-    if author:
-        print(author)
-        return post
-    else:
-        author = Author(
-            name=post.get('author').get('name'),
-            email=post.get('author').get('email'),
-            image="https://avatars0.githubusercontent.com/u/25279263?s=460&v=4"
-        )
-        author.save()
+    # author = Author.objects(name=post.get('author').get('name')).first()
+    # if author:
+    #     print(author)
+    #     return post
+    # else:
+    #     author = Author(
+    #         name=post.get('author').get('name'),
+    #         email=post.get('author').get('email'),
+    #         image="https://avatars0.githubusercontent.com/u/25279263?s=460&v=4"
+    #     )
+    #     author.save()
     return post
 
 

@@ -1,18 +1,31 @@
-from flask import jsonify, request, session, redirect
-from passlib.hash import pbkdf2_sha256
+from flask import jsonify, session
 from blog import db
+import datetime
 
 
 class User(db.Document):
     """
         User Model
+        user_id: str
         name: str
         email: str
         password: str
+        image: str
+        \n--------- Author ----------\n
+        bio: str
+        joined: str
+
+        meta = {
+        'collection': 'users',
+        'strict': False
+        }
+
     """
-    name = db.StringField()
-    email = db.StringField()
-    password = db.StringField()
+    name = db.StringField(required=True, max_length=200, unique=True)
+    email = db.StringField(required=True, primary_key=True)
+    image = db.StringField(required=False, max_length=200)
+    bio = db.StringField(required=False, max_length=300, default="")
+    joined = db.DateTimeField(required=True, default=datetime.datetime.utcnow)
 
     def to_json(self):
         user = {
@@ -27,45 +40,22 @@ class User(db.Document):
         session['user'] = user
         return jsonify(user), 200
 
+    def get_user(email):
+        user = User.objects(email=email).first()
+        return user.to_json()
+
+    def update_user(user):
+        user_ = User.objects(email=user['email']).first()
+        try:
+            user_.update(**user)
+            return {"success": "User updated successfully", "status": 200}
+        except Exception as e:
+            return {"error": str(e), "status": 400}
+
     def signup(self):
-        # print("0--------------")
-        # print(request.get_json()["name"])
-
-        # Create the user object
-        user = {
-            "name": self.name,
-            "email": self.email,
-            "password": self.password
-        }
-
-        # Check for existing email address
-        if User.objects(email=user['email']).first():
-            return jsonify({"error": "Email address already in use"}), 400
-
-        # Encrypt the password
-        user['password'] = pbkdf2_sha256.encrypt(user['password'])
-
-        if User(**user).save():
-            return self.start_session(user)
-
-        return jsonify({"error": "Signup failed"}), 400
-
-    def signout(self):
-        session.clear()
-        return redirect('/')
-
-    def login(self):
-
         user = User.objects(email=self.email).first()
-
-        if user and pbkdf2_sha256.verify(request.form.get('password'),
-                                         user['password']):
-            return self.start_session(user)
-
-        return jsonify({"error": "Invalid login credentials"}), 401
-
-    def get_all_users(self):
-        return User.objects().all()
-
-    def get_user(email:str):
-        return User.objects(email=email).first()
+        if user:
+            return {"error": "User already exists", "status": 400}
+        else:
+            self.save()
+            return {"success": "User created successfully", "status": 200}
