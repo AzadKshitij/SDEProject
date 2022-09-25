@@ -42,3 +42,8 @@ def callback():
 @app.route('/user/signup', methods=['POST'])
 def signup():
     return User.signup()
+
+
+@app.route('/user/update', methods=['POST'])
+def update_user():
+    return User.update_user(request.get_json())
