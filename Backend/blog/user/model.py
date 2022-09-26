@@ -52,10 +52,11 @@ class User(db.Document):
         except Exception as e:
             return {"error": str(e), "status": 400}
 
-    def signup(self):
-        user = User.objects(email=self.email).first()
+    def signup(data):
+        user = User.objects(email=data.get("email")).first()
         if user:
             return {"error": "User already exists", "status": 400}
         else:
-            self.save()
+            user = User(**data)
+            user.save()
             return {"success": "User created successfully", "status": 200}

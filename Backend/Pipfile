@@ -10,6 +10,7 @@ uuid = "*"
 requests = "*"
 authlib = "*"
 python-dotenv = "*"
+pymongo = "*"
 
 [dev-packages]
 autopep8 = "*"

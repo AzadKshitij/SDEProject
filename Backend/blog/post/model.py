@@ -1,7 +1,8 @@
+from configparser import DuplicateSectionError
+# from importlib.metadata import requires
 from flask import jsonify
 from blog import db
 from blog.user.model import User
-from blog.image.model import Image
 import datetime
 
 
@@ -31,11 +32,14 @@ class Post(db.Document):
     isPublished = db.BooleanField(required=True, default=False)
     views = db.IntField(default=0)
     tags = db.ListField(db.StringField(max_length=30), default=[""])
-    mainImage = db.ReferenceField(Image)
+    mainImage = db.ImageField(thumbnail_size=(800, 450, True))
+    alt = db.StringField(required=True)
+    original = db.StringField()
+    caption = db.StringField()
     publishedAt = db.DateTimeField(required=True,
                                    default=datetime.datetime.utcnow)
 
-    meta = {'ordering': ['publishedAt'], 'allow_inheritance': True}
+    meta = {'ordering': ['-publishedAt'], 'allow_inheritance': True}
 
     def to_json(self):
         user = {
@@ -49,15 +53,18 @@ class Post(db.Document):
         return jsonify(user)
 
     def submit_post(self):
+        print("self.slug: ", self.slug)
         post = Post.objects(slug=self.slug).first()
         if post:
-            return {"error": "Post already exists", "status": 400}
+            raise DuplicateSectionError(section="Slug")
+            # return {"error": "Post already exists", "status": 400}
         else:
             self.save()
             return {"success": "Post created successfully", "status": 200}
 
-    def get_post(self, slug):
-        return Post.objects(_id=slug).first()
+    def get_post(slug):
+        # return Post.objects.first_or_404(slug=slug)
+        return Post.objects(slug=slug).first()
 
     def get_all_posts(self):
         return Post.objects()
