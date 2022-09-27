@@ -54,7 +54,7 @@ function BlogCard() {
 				industry.
 			</p>
 			<div className="text-center">
-				<span className="ease inline-block transform cursor-pointer rounded-full bg-background px-8 py-3 text-lg font-medium text-white transition duration-500 hover:-translate-y-1 hover:bg-mainTitle">
+				<span className="ease inline-block transform cursor-pointer rounded-full bg-background px-8 py-3 text-lg font-medium text-red transition duration-500 hover:-translate-y-1 hover:bg-mainTitle">
 					Continue Reading
 				</span>
 			</div>
