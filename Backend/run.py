@@ -7,7 +7,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.DEBUG)
-# logging.basicConfig(filename='app.log', filemode='w', format='%(asctime)s - %(message)s', level=logging.DEBUG)
+# logging.basicConfig(filename='app.log', filemode='w',
+# format='%(asctime)s - %(message)s', level=logging.DEBUG)
 logger = logging.getLogger("flask.app")
 
 if __name__ == '__main__':

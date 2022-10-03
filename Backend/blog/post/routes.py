@@ -1,27 +1,30 @@
 from datetime import datetime
-from flask import request, jsonify, url_for
-from blog import app
+# import json
+from flask import request, jsonify  # , url_for  # , after_this_request
+from blog import app, s3, BUCKET
 from blog.post.model import Post, User
-from io import BytesIO
-from flask.helpers import send_file
+from werkzeug.utils import secure_filename
 
 
 @app.route("/post/submit", methods=["POST"])
 def submit_post():
     print("sdj ashdkjs dhkasdk kaskjdh kjasdhkjahd")
     tags = request.form.get('tags').split(",")
-    print("request.form.get('tags'): ", tags)
+    # print("request.form.get('tags'): ", tags)
     image_ = request.files["image"]
-    # print(encoded)
+    file_name = secure_filename(image_.filename)
+    s3.upload_fileobj(image_,
+                      BUCKET,
+                      "Posts/{}".format(file_name),
+                      ExtraArgs={
+                          "ACL": "public-read",
+                          "ContentType": image_.content_type
+                      })
+
+    file_url = 'https://s3.ap-south-1.amazonaws.com/%s/%s' % (
+        BUCKET, "Posts/{}".format(file_name))
+    # https://s3.ap-south-1.amazonaws.com/aviato-iitj/Posts/EUYxhj.png
     user = User.objects(email=request.form.get('email')).first()
-    # image = Image(src=image_,
-    #               alt=request.form.get('alt'),
-    #               original=request.form.get('original'),
-    #               caption=request.form.get('caption')).save()
-    # print("====================")
-    # print(image)
-    # print("====================")
-    # user = User.get_user(email="Kshitij@kshitij.com")
     post = Post(title=request.form.get('title'),
                 content=request.form.get('content'),
                 author=user,
@@ -31,12 +34,10 @@ def submit_post():
                 views=request.form.get('views'),
                 tags=tags,
                 publishedAt=datetime.now(),
+                mainImage=file_url,
                 alt=request.form.get('alt'),
                 original=request.form.get('original'),
                 caption=request.form.get('caption'))
-    post.mainImage.put(image_,
-                       content_type=image_.content_type,
-                       filename=image_.filename)
     post.submit_post()
 
     return jsonify(post), 201
@@ -50,14 +51,4 @@ def get_posts():
 @app.route("/post/get/<slug>")
 def get_post(slug):
     post = Post.get_post(slug)
-    image = url_for("get_image", post=post)
-    return jsonify(post), image
-
-
-@app.route("/post/get/image/<slug>")
-def get_image(slug: Post):
-    post = Post.get_post(slug)
-    image = post.mainImage.read()
-    content_type = post.mainImage.content_type
-    # filename = post.mainImage.filename
-    return send_file(BytesIO(image), mimetype=content_type)
+    return jsonify(post), 200

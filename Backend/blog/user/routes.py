@@ -15,26 +15,15 @@ def login():
 
 @app.route('/user/login/callback')
 def callback():
-    # token = google.authorize_access_token()  # noqa
-    # resp = google.google.get('userinfo')  # noqa
-    # user = User.objects(email=user['email']).first()
-    # if user:
-    #     user.update(**user)
-    # else:
-    #     user = User(**user).save()
-    # return 'Logged in as {}.'.format(user.email)
-
-    # return 'Logged in as {}.'.format('user.email')
-
     token = oauth.google.authorize_access_token()
 
     session['user'] = token['userinfo']
-    print("==========================================")
-    print(token)
-    print("==========================================")
-    print("==========================================")
-    print(session['user'])
-    print("==========================================")
+    # print("==========================================")
+    # print(token)
+    # print("==========================================")
+    # print("==========================================")
+    # print(session['user'])
+    # print("==========================================")
 
     return redirect('/')
 

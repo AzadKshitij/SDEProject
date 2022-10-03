@@ -2,12 +2,21 @@ from flask import Flask
 import flask_mongoengine as mongoengine
 from authlib.integrations.flask_client import OAuth
 import os
+import boto3
 from blog import config  # noqa
 
 # import os
 
 # Connect to MongoDB
 app = Flask(__name__)
+UPLOAD_FOLDER = "Posts"
+BUCKET = "aviato-iitj"
+
+app.config['S3_BUCKET'] = os.environ.get('S3_BUCKET')
+app.config['S3_KEY'] = os.environ.get('S3_KEY')
+app.config['S3_SECRET'] = os.environ.get('S3_SECRET')
+app.config['S3_LOCATION'] = 'http://{}.s3.amazonaws.com/'.format(BUCKET)
+
 app.config['MONGODB_SETTINGS'] = {
     'db': 'blog',
     'host': 'localhost',
@@ -31,6 +40,9 @@ app.config.from_object('config')
 # app.secret_key = 'asda djasdhkjas dhasd jkasdh asdhhas dkjashd kj'
 db = mongoengine.MongoEngine(app)
 oauth = OAuth(app)
+s3 = boto3.client("s3",
+                  aws_access_key_id=app.config['S3_KEY'],
+                  aws_secret_access_key=app.config['S3_SECRET'])
 
 # check if db is connected
 print(db)

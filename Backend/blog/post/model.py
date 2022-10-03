@@ -32,7 +32,7 @@ class Post(db.Document):
     isPublished = db.BooleanField(required=True, default=False)
     views = db.IntField(default=0)
     tags = db.ListField(db.StringField(max_length=30), default=[""])
-    mainImage = db.ImageField(thumbnail_size=(800, 450, True))
+    mainImage = db.StringField()
     alt = db.StringField(required=True)
     original = db.StringField()
     caption = db.StringField()
