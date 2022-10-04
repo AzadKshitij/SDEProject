@@ -1,3 +1,4 @@
+# from flask import request, jsonify  # , url_for  # , after_this_request
 from blog import app
 import json
 
@@ -10,8 +11,6 @@ from blog.post.routes import *  # noqa
 
 @app.route('/')
 def index():
-    # posts = User.objects().all()
-
     return "<a href='/user/login'>Login</a>"
 
 
