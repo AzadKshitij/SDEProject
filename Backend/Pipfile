@@ -13,6 +13,8 @@ python-dotenv = "*"
 pymongo = "*"
 flask-cors = "*"
 python-bsonjs = "*"
+waitress = "*"
+boto3 = "*"
 
 [dev-packages]
 autopep8 = "*"
