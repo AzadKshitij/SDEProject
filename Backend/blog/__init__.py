@@ -3,12 +3,15 @@ import flask_mongoengine as mongoengine
 from authlib.integrations.flask_client import OAuth
 import os
 import boto3
+from flask_cors import CORS
 from blog import config  # noqa
 
 # import os
 
 # Connect to MongoDB
 app = Flask(__name__)
+CORS(app)
+
 UPLOAD_FOLDER = "Posts"
 BUCKET = "aviato-iitj"
 

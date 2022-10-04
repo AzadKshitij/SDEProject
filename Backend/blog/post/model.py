@@ -66,5 +66,5 @@ class Post(db.Document):
         # return Post.objects.first_or_404(slug=slug)
         return Post.objects(slug=slug).first()
 
-    def get_all_posts(self):
+    def get_all_posts():
         return Post.objects()
