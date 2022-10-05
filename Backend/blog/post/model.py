@@ -39,7 +39,13 @@ class Post(db.Document):
     publishedAt = db.DateTimeField(required=True,
                                    default=datetime.datetime.utcnow)
 
-    meta = {'ordering': ['-publishedAt'], 'allow_inheritance': True}
+    meta = {'indexes': [
+        {'fields': ['$title', "$content", "$summary"],
+         'default_language': 'english',
+         'weights': {'title': 10, 'summary': 8, 'content': 3}
+         }
+    ],
+        'allow_inheritance': True}
 
     def to_json(self):
         user = {

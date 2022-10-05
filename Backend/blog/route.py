@@ -7,6 +7,7 @@ from blog.user.model import User
 # Routes
 from blog.user.routes import *  # noqa
 from blog.post.routes import *  # noqa
+from blog.notification.route import *  # noqa
 
 
 @app.route('/')
