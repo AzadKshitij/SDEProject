@@ -82,3 +82,17 @@ def get_posts():
 def get_post(slug):
     post = Post.get_post(slug)
     return jsonify(post), 200
+
+
+# search post
+@app.route("/post/search/<query>")
+def search_post(query):
+    post = Post.objects.search_text(query).order_by('$text_score')
+    return jsonify(post), 200
+
+
+# search post by tags
+@app.route("/post/search/tags/<query>")
+def search_post_by_tags(query):
+    post = Post.objects(tags=query)
+    return jsonify(post), 200

@@ -5,24 +5,24 @@ from blog import app, oauth  # noqa
 from blog.user.model import User  # noqa
 
 
-# @app.route('/user/login')
-# def login():
-#     redirect_uri = url_for('callback', _external=True)
-#     print("==========================================")
-#     print(redirect_uri)
-#     print("==========================================")
-#     return oauth.google.authorize_redirect(redirect_uri)
-
-
+# @app.route('/user/signup', methods=['POST'])
 def signup(request):
-    user = User(email=request.form.get('email'),
-                name=request.form.get('name'),
-                image=request.form.get('image'))
+    print(
+        "=========================\n",
+        request.get_json(), "\n"
+        "========================="
+    )
+    data = request.get_json()
+
+    user = User(email=data.get('email'),
+                name=data.get('name'),
+                image=data.get('image'),
+                bio=data.get('bio') or '')
     user.save()
     return jsonify(user), 201
 
 
-@app.route('/user/login/<email>')
+@app.route('/user/login/<email>', methods=['POST'])
 def login(email: str):
     user = User.objects(email=email).first()
     if user:

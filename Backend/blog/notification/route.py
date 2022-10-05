@@ -16,7 +16,7 @@ def send_notification():
     return jsonify({"message": "Notification sent successfully"}), 200
 
 
-@app.route("/notifications/set", methods=["GET"])
+@app.route("/notifications/set", methods=["POST"])
 def set_read():
     data = request.get_json()
     notification = Notification.objects(user_id=data.get("email"))
