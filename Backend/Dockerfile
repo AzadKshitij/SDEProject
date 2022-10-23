@@ -14,7 +14,8 @@ ENV PYTHONUNBUFFERED 1
 
 
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # WORKDIR /var/www/
 

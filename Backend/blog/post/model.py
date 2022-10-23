@@ -27,9 +27,9 @@ class Post(db.Document):
     summary = db.StringField(required=True)
     content = db.StringField(required=True)
     author = db.ReferenceField(User, reverse_delete_rule=db.CASCADE)
-    slug = db.StringField(required=True, unique=True)
-    isEdited = db.BooleanField(required=True, default=False)
-    isPublished = db.BooleanField(required=True, default=False)
+    slug = db.StringField(required=True)
+    isEdited = db.BooleanField(default=False)
+    isPublished = db.BooleanField(default=True)
     views = db.IntField(default=0)
     tags = db.ListField(db.StringField(max_length=30), default=[""])
     mainImage = db.StringField()
@@ -68,9 +68,11 @@ class Post(db.Document):
             self.save()
             return {"success": "Post created successfully", "status": 200}
 
+    @staticmethod
     def get_post(slug):
         # return Post.objects.first_or_404(slug=slug)
         return Post.objects(slug=slug).first()
 
+    @staticmethod
     def get_all_posts():
         return Post.objects()
