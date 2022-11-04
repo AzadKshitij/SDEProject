@@ -98,7 +98,7 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-export const Tiptap = ({ setDescription }) => {
+const Tiptap = ({ setDescription }) => {
   const editor = useEditor({
     extensions: [StarterKit, Underline],
     content: ``,
@@ -109,6 +109,10 @@ export const Tiptap = ({ setDescription }) => {
     },
   });
 
+  // editor?.commands.setContent(
+  //   `<p>It's 19871. You can't turn on a radio, or go to a mall without hearing Olivia Newton-John’s hit song, Physical.'</p><p>as</p><p>dsadasdasd</p><p>d</p><p>asd</p><ol><li><p>as d</p></li><li><p>sdas das</p></li><li><p>das dasd asdsadsafagdfad</p></li><li><p>sa dasd as</p></li><li><p>d</p></li></ol>`
+  // );
+
   return (
     <div className="textEditor">
       <MenuBar editor={editor} />
@@ -116,3 +120,5 @@ export const Tiptap = ({ setDescription }) => {
     </div>
   );
 };
+
+export { Tiptap, MenuBar };

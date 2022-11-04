@@ -1,10 +1,25 @@
 // @ts-nocheck
 import React, { useState } from "react";
 import { createPost } from "../service/post.route";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import { MenuBar } from "./Editor/TipTap";
 
 export default function PostDetails() {
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [postDetails, setPostDetails] = useState({});
+  const [description, setDescription] = useState("");
+
+  const editor = useEditor({
+    extensions: [StarterKit, Underline],
+    content: ``,
+
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      setDescription(html);
+    },
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -13,9 +28,10 @@ export default function PostDetails() {
 
     for (const key in postDetails) {
       formData.append(key, postDetails[key]);
+      console.log("postDetails", key, postDetails[key]);
     }
 
-    console.log("postDetails: ", postDetails);
+    formData.append("content", description);
 
     const response = await createPost(formData);
 
@@ -66,20 +82,7 @@ export default function PostDetails() {
             }
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="description" className=" mx-10 ">
-            Description
-          </label>
-          <textarea
-            className="b-2 border-gray-300 rounded-lg w-full p-2 bg-gray-100"
-            id="description"
-            rows="3"
-            placeholder="Enter description"
-            onChange={(e) =>
-              setPostDetails({ ...postDetails, content: e.target.value })
-            }
-          ></textarea>
-        </div>
+
         <div className="form-group">
           <label htmlFor="description" className=" mx-10 ">
             summary
@@ -147,6 +150,12 @@ export default function PostDetails() {
             }
           />
         </div>
+        {/* ------------------------------ */}
+        <div className="textEditor">
+          <MenuBar editor={editor} />
+          <EditorContent editor={editor} />
+        </div>
+        {/* ------------------------------ */}
         <button type="submit" className="btn btn-primary">
           Submit
         </button>

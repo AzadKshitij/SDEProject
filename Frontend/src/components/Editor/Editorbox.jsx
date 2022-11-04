@@ -10,8 +10,8 @@ function Editorbox() {
   return (
     <div className="Editorbox">
       <PostDetails />
-      <Tiptap setDescription={setDescription} />
-      <Details description={description} />
+      {/* <Tiptap setDescription={setDescription} /> */}
+      {/* <Details description={description} /> */}
     </div>
   );
 }

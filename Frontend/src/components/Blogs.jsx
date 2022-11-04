@@ -39,7 +39,7 @@ function Blogs() {
     <div className="container mx-auto bg-bg px-10">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12  ">
         <div className=" col-span-1 lg:col-span-8 ">
-          {console.log(blogs)}
+          {/* {console.log(blogs)} */}
           {blogs.map((blog) => (
             <BlogCard
               key={blog._id["$oid"]}
