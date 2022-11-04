@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-function BlogCard({ title, summary, image, publishedAt, author }) {
+function BlogCard({ title, summary, image, publishedAt, author, slug }) {
   const date = new Date(publishedAt);
   // console.log(date);
 
@@ -59,11 +60,11 @@ function BlogCard({ title, summary, image, publishedAt, author }) {
       <p className="mb-8 px-4 text-center text-lg font-normal text-gray-800 lg:px-20">
         {summary}
       </p>
-      <div className="text-center">
+      <Link to={`/post/${slug}`} className="text-center">
         <span className="ease inline-block transform cursor-pointer rounded-full bg-background px-8 py-3 text-lg font-medium text-red transition duration-500 hover:-translate-y-1 hover:bg-mainTitle">
           Continue Reading
         </span>
-      </div>
+      </Link>
     </div>
   );
 }

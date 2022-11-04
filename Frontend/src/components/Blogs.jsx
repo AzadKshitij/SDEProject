@@ -43,6 +43,7 @@ function Blogs() {
           {blogs.map((blog) => (
             <BlogCard
               key={blog._id["$oid"]}
+              slug={blog.slug}
               title={blog.title}
               summary={blog.summary}
               image={blog.mainImage}

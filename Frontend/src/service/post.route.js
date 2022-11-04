@@ -27,7 +27,7 @@ async function getAllData() {
   }
 }
 
-async function getOneData(slug) {
+async function getOnePost(slug) {
   try {
     const res = await service.get(`/post/get/${slug}`);
 
@@ -114,4 +114,4 @@ async function searchPosts(query) {
   }
 }
 
-export { getAllData, getOneData, createPost, searchPosts };
+export { getAllData, getOnePost as getOneData, createPost, searchPosts };

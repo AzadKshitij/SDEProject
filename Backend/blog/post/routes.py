@@ -21,14 +21,15 @@ def submit_post():
     print("###############################")
     # -----------------------------------------------------------------
     # print("sdj ashdkjs dhkasdk kaskjdh kjasdhkjahd")
-    # post = Post.objects(slug=request.form.get('slug')).first()
-    # if post:
-    #     raise DuplicateSectionError(section="Slug")
-    # else:
+    post = Post.objects(slug=request.form.get('slug')).first()
+    slug = slugify(request.form.get('title'))
+    if post:
+        slug = slug + "-" + str(uuid.uuid4())[:8]
+
     tags = request.form.get('tags').split(",")
     # print("request.form.get('tags'): ", tags)
     image_ = request.files["image"]
-    file_name = uuid.uuid4()
+    file_name = slug
     s3.upload_fileobj(image_,
                       BUCKET,
                       "Posts/{}".format(file_name),
@@ -45,7 +46,7 @@ def submit_post():
                 content=request.form.get('content'),
                 author=user,
                 summary=request.form.get('summary'),
-                slug=slugify(request.form.get('title')),
+                slug=slug,
                 # isEdited=request.form.get('isEdited'),
                 # views=request.form.get('views'),
                 tags=tags,
@@ -91,7 +92,7 @@ def get_posts():
 
 @app.route("/post/get/<slug>")
 def get_post(slug):
-    post = Post.get_post(slug)
+    post = Post.get_post(slug=slug)
     return jsonify(post), 200
 
 
