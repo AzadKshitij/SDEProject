@@ -2,7 +2,8 @@
 import React from "react";
 import Header from "./components/Header";
 import Blogs from "./components/Blogs";
-import Editorbox from "./components/Editor/Editorbox";
+// import Editor from "./components/Editor/Editor";
+import AddPost from "./components/Post/AddPost";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Post from "./components/Post/Post";
 
@@ -13,7 +14,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Blogs />}></Route>
-          <Route exact path="/newblog" element={<Editorbox />}></Route>
+          <Route exact path="/newblog" element={<AddPost />}></Route>
           <Route exact path="/post/:slug" element={<Post />}></Route>
         </Routes>
       </Router>

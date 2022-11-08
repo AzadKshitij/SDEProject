@@ -1,25 +1,16 @@
 // @ts-nocheck
-import React, { useState } from "react";
-import { createPost } from "../service/post.route";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import { MenuBar } from "./Editor/TipTap";
+import React, { useState, useRef } from "react";
+import { createPost } from "../../service/post.route";
+import "./AddPost.css";
+import JoditEditor from "jodit-react";
+import { Card, CardBody, Form } from "reactstrap";
 
-export default function PostDetails() {
+export default function AddPost() {
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [postDetails, setPostDetails] = useState({});
   const [description, setDescription] = useState("");
 
-  const editor = useEditor({
-    extensions: [StarterKit, Underline],
-    content: ``,
-
-    onUpdate: ({ editor }) => {
-      const html = editor.getHTML();
-      setDescription(html);
-    },
-  });
+  const editor = useRef(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,17 +25,6 @@ export default function PostDetails() {
     formData.append("content", description);
 
     const response = await createPost(formData);
-
-    // try {
-    //   const response = await axios({
-    //     method: "post",
-    //     url: "/api/upload/file",
-    //     data: formData,
-    //     headers: { "Content-Type": "multipart/form-data" },
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   const handleFileSelect = (event) => {
@@ -52,11 +32,15 @@ export default function PostDetails() {
   };
 
   return (
-    <div className="PostDetails">
-      <form onSubmit={handleSubmit} method="POST" className="space-y-5">
+    <div className="">
+      <form
+        onSubmit={handleSubmit}
+        method="POST"
+        className="space-y-5 w-2/3 content-center flex flex-col mx-auto"
+      >
         <div className="form-group">
-          <label htmlFor="email" className=" mx-10 ">
-            Email
+          <label htmlFor="email" className=" mr-10">
+            Email*
           </label>
           <input
             type="text"
@@ -69,8 +53,8 @@ export default function PostDetails() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="title" className=" mx-10 ">
-            Title
+          <label htmlFor="title" className=" mr-10">
+            Title*
           </label>
           <input
             type="text"
@@ -84,8 +68,8 @@ export default function PostDetails() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="description" className=" mx-10 ">
-            summary
+          <label htmlFor="description" className=" mr-10">
+            Summary*
           </label>
           <textarea
             className="b-2 border-gray-300 rounded-lg w-full p-2 bg-gray-100"
@@ -98,8 +82,8 @@ export default function PostDetails() {
           ></textarea>
         </div>
         <div className="form-group">
-          <label htmlFor="tags" className=" mx-10 ">
-            Tags
+          <label htmlFor="tags" className=" mr-10">
+            Tags*
           </label>
           <input
             type="text"
@@ -112,7 +96,7 @@ export default function PostDetails() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="image" className=" mx-10 ">
+          <label htmlFor="image" className=" mr-10">
             Image
           </label>
           <input
@@ -123,7 +107,7 @@ export default function PostDetails() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="tags" className=" mx-10 ">
+          <label htmlFor="tags" className=" mr-10">
             Alt
           </label>
           <input
@@ -137,7 +121,7 @@ export default function PostDetails() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="tags" className=" mx-10 ">
+          <label htmlFor="tags" className=" mr-10">
             original
           </label>
           <input
@@ -152,8 +136,7 @@ export default function PostDetails() {
         </div>
         {/* ------------------------------ */}
         <div className="textEditor">
-          <MenuBar editor={editor} />
-          <EditorContent editor={editor} />
+          <JoditEditor editor={editor} />
         </div>
         {/* ------------------------------ */}
         <button type="submit" className="btn btn-primary">
