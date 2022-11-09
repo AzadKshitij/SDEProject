@@ -60,9 +60,8 @@ def submit_post():
     return jsonify(post), 201
 
 
-@app.route("/post/get")
+@app.route("/post/get", methods=["GET"])
 def get_posts():
-
     pipeline = [
         {
             "$lookup": {
@@ -87,7 +86,10 @@ def get_posts():
     # print("============================")
     post = json_util.dumps(post)
     # print("============================")
-    return post, 200
+    if post:
+        return post, 200
+    else:
+        return jsonify({"error": "No Post Exist"}), 500
 
 
 @app.route("/post/get/<slug>")

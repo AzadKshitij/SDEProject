@@ -3,7 +3,7 @@ from blog import app
 import logging
 # import os
 from dotenv import load_dotenv
-# from waitress import serve
+from waitress import serve
 
 load_dotenv()
 
@@ -18,5 +18,5 @@ if __name__ == '__main__':
     # for k, v in sorted(os.environ.items()):
     #     logger.debug(k,':', v)
     # print('\n')
-    app.run(host="0.0.0.0", port=5000, debug=True)
-    # serve(app, host='0.0.0.0', port=5000)
+    # app.run(host="0.0.0.0", port=5000, debug=True)
+    serve(app, host='0.0.0.0', port=5000)

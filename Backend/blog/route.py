@@ -14,6 +14,14 @@ from blog.notification.route import *  # noqa
 def index():
     return "<a href='/user/login'>Login</a>"
 
+@app.route('/user/signup', methods=['POST'])
+def signup():
+    user = User(email=request.get_json().get('email'),
+                name=request.get_json().get('name'),
+                image=request.get_json().get('image'))
+    user.save()
+    return jsonify(user), 201
+
 
 @app.route('/test')
 def test():

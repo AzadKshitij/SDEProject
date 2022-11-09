@@ -4,6 +4,7 @@ LABEL MAINTAINER="Kshitij Sanodariya sanodariya.1@iitj.ac.in"
 
 ENV GROUP_ID=1000 \
     USER_ID=1000
+ENV AM_I_IN_A_DOCKER_CONTAINER Yes
 
 ADD . /app
 WORKDIR /app
@@ -16,7 +17,7 @@ ENV PYTHONUNBUFFERED 1
 RUN pip install --upgrade pip
 # RUN pip install -r requirements.txt
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
-
+RUN pip install gunicorn
 # WORKDIR /var/www/
 
 

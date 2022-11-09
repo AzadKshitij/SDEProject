@@ -20,22 +20,31 @@ app.config['S3_KEY'] = os.environ.get('S3_KEY')
 app.config['S3_SECRET'] = os.environ.get('S3_SECRET')
 app.config['S3_LOCATION'] = 'http://{}.s3.amazonaws.com/'.format(BUCKET)
 
-app.config['MONGODB_SETTINGS'] = {
-    'db': 'blog',
-    'host': 'localhost',
-    'port': 27017,
-}
-########################################
-######### For Docker Container ######### # noqa
-########################################
-# app.config['MONGODB_SETTINGS'] = {
-#     'db': 'blog',
-#     'host': 'mongodb',
-#     'port': 27017,
-#     'username': 'root',
-#     'password': 'pass',
-#     'authSource': 'admin'
-# }
+is_docker = os.environ.get('AM_I_IN_A_DOCKER_CONTAINER', False)
+
+if is_docker:
+    ########################################
+    ######### For Docker Container ######### # noqa
+    ########################################
+    app.config['MONGODB_SETTINGS'] = {
+        'db': 'blog',
+        'host': 'mongodb',
+        'port': 27017,
+        'username': 'root',
+        'password': 'pass',
+        'authSource': 'admin'
+    }
+else:
+    ########################################
+    ############### For Local ############## # noqa
+    ########################################
+    print("Not in Docker")
+    app.config['MONGODB_SETTINGS'] = {
+        'db': 'blog',
+        'host': 'localhost',
+        'port': 27017,
+    }
+    
 
 # set secret key
 app.config['SECRET_KEY'] = os.environ.get('GOOGLE_CLIENT_SECRET')

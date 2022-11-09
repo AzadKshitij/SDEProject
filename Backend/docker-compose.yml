@@ -4,6 +4,7 @@ services:
     build: .
     container_name: blog
     command: python -u run.py
+    # command: python -u -m gunicorn --bind 0.0.0.0:5000 run:app
     ports:
       - "5000:5000"
     
@@ -24,6 +25,7 @@ services:
       - FLASK_RUN_CERT=adhoc
       - FLASK_RUN_KEY=adhoc
       - FLASK_RUN_NO_RELOAD=0
+      
 
   db:
     image: mongo:latest
