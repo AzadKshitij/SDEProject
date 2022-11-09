@@ -12,6 +12,16 @@ export default function AddPost() {
 
   const editor = useRef(null);
 
+  const getHTML = (e) => {
+    // console.log("editor.current", e);
+    setDescription(e);
+    // console.log("editor.current.innerHTML", editor.current.innerHTML);
+    // if (editor.current) {
+    //   console.log(editor.current.s.html);
+    //   console.log(editor.current.innerHTML);
+    // }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -136,7 +146,12 @@ export default function AddPost() {
         </div>
         {/* ------------------------------ */}
         <div className="textEditor">
-          <JoditEditor editor={editor} />
+          <JoditEditor
+            ref={editor}
+            editor={editor}
+            // onChange={(e) => getHTML(e)}
+            onBlur={(e) => getHTML(e)}
+          />
         </div>
         {/* ------------------------------ */}
         <button type="submit" className="btn btn-primary">

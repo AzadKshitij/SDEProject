@@ -15,7 +15,7 @@ function Blogs() {
 		let result = await getAllData();
 		console.log("result.data: ", result.data);
 		setBlogs(result.data);
-		console.log("blogs: ", blogs);
+		// console.log("blogs: ", blogs);
 		// try {
 		//   const res = await service.get("/post/get");
 
