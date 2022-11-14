@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { createPost } from "../../service/post.route";
 import "./AddPost.css";
 import JoditEditor from "jodit-react";
@@ -12,14 +12,12 @@ export default function AddPost() {
 
   const editor = useRef(null);
 
+  useEffect(() => {
+    setPostDetails({ ...postDetails, email: localStorage.getItem("email") });
+  }, []);
+
   const getHTML = (e) => {
-    // console.log("editor.current", e);
     setDescription(e);
-    // console.log("editor.current.innerHTML", editor.current.innerHTML);
-    // if (editor.current) {
-    //   console.log(editor.current.s.html);
-    //   console.log(editor.current.innerHTML);
-    // }
   };
 
   const handleSubmit = async (event) => {
@@ -48,7 +46,7 @@ export default function AddPost() {
         method="POST"
         className="space-y-5 w-2/3 content-center flex flex-col mx-auto"
       >
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="email" className=" mr-10">
             Email*
           </label>
@@ -61,7 +59,7 @@ export default function AddPost() {
               setPostDetails({ ...postDetails, email: e.target.value })
             }
           />
-        </div>
+        </div> */}
         <div className="form-group">
           <label htmlFor="title" className=" mr-10">
             Title*

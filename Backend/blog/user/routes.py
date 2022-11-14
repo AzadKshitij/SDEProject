@@ -5,20 +5,28 @@ from blog import app, oauth  # noqa
 from blog.user.model import User  # noqa
 
 
-# @app.route('/user/signup', methods=['POST'])
-def signup(request):
+@app.route('/user/signup', methods=['POST'])
+def signup():
     print(
         "=========================\n",
         request.get_json(), "\n"
         "========================="
     )
     data = request.get_json()
-
-    user = User(email=data.get('email'),
-                name=data.get('name'),
-                image=data.get('image'),
-                bio=data.get('bio') or '')
-    user.save()
+    user = User.objects(email=data.get('email')).first()
+    if user:
+        # update user
+        user.update(
+            name=data.get('name'),
+            image=data.get('image'),
+            bio=data.get('bio') or ''
+        )
+    else:
+        user = User(email=data.get('email'),
+                    name=data.get('name'),
+                    image=data.get('image'),
+                    bio=data.get('bio') or '')
+        user.save()
     return jsonify(user), 201
 
 

@@ -4,44 +4,54 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, signInWithGoogle } from "../../firebase";
 import Alert from "@mui/material/Alert";
 
+import { createUser } from "../../service/user.route";
+
 function SignUp() {
-	const navigate = useNavigate();
-	const [values, setValues] = useState({
-		name: "",
-		email: "",
-		pass: "",
-	});
-	const [errorMsg, setErrorMsg] = useState("");
-	const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+  const navigate = useNavigate();
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    pass: "",
+  });
+  const [errorMsg, setErrorMsg] = useState("");
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
-	const handlegoogle = () => {
-		signInWithGoogle();
-		navigate("/");
-	};
+  const handlegoogle = () => {
+    signInWithGoogle();
+    navigate("/");
+  };
 
-	const handleSubmission = () => {
-		if (!values.name || !values.email || !values.pass) {
-			setErrorMsg("Fill all fields");
-			return;
-		}
-		setErrorMsg("");
+  const handleSubmission = () => {
+    if (!values.name || !values.email || !values.pass) {
+      setErrorMsg("Fill all fields");
+      return;
+    }
+    setErrorMsg("");
 
-		setSubmitButtonDisabled(true);
-		createUserWithEmailAndPassword(auth, values.email, values.pass)
-			.then(async (res) => {
-				setSubmitButtonDisabled(false);
-				const user = res.user;
-				await updateProfile(user, {
-					displayName: values.name,
-				});
-				navigate("/");
-			})
-			.catch((err) => {
-				setSubmitButtonDisabled(false);
-				setErrorMsg(err.message);
-			});
-	};
-	return (
+    setSubmitButtonDisabled(true);
+    createUserWithEmailAndPassword(auth, values.email, values.pass)
+      .then(async (res) => {
+        setSubmitButtonDisabled(false);
+        const user = res.user;
+        await updateProfile(user, {
+          displayName: values.name,
+        });
+        await createUser({
+          name: values.name,
+          email: values.email,
+        });
+        localStorage.setItem("name", values.name);
+        localStorage.setItem("email", values.email);
+
+        navigate("/");
+      })
+      .catch((err) => {
+        setSubmitButtonDisabled(false);
+        setErrorMsg(err.message);
+      });
+  };
+
+  return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <div
         className="
