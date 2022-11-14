@@ -6,6 +6,9 @@ import boto3
 from flask_cors import CORS
 from blog import config  # noqa
 
+import logging
+
+
 # import os
 
 # Connect to MongoDB
@@ -14,6 +17,8 @@ CORS(app)
 
 UPLOAD_FOLDER = "Posts"
 BUCKET = "aviato-iitj"
+
+
 
 app.config['S3_BUCKET'] = os.environ.get('S3_BUCKET')
 app.config['S3_KEY'] = os.environ.get('S3_KEY')
@@ -54,10 +59,12 @@ db = mongoengine.MongoEngine(app)
 oauth = OAuth(app)
 s3 = boto3.client("s3",
                   aws_access_key_id=app.config['S3_KEY'],
-                  aws_secret_access_key=app.config['S3_SECRET'])
+                  aws_secret_access_key=app.config['S3_SECRET'],
+                  region_name='us-east-1')
 
 # check if db is connected
 print(db)
+print(app.config['S3_KEY'])
 
 CONF_URL = 'https://accounts.google.com/.well-known/openid-configuration'
 
