@@ -101,8 +101,31 @@ def get_post(slug):
 # search post
 @app.route("/post/search/<query>")
 def search_post(query):
-    post = Post.objects.search_text(query).order_by('$text_score')
-    return jsonify(post), 200
+    pipeline = [
+        {
+            "$lookup": {
+                "from": "user",
+                "localField": "author",
+                "foreignField": "_id",
+                "as": "author"
+            }
+        },
+        {
+            "$sort":{
+                "publishedAt": -1
+            }
+        },
+        {
+            "$unwind": "$author"
+        },
+    ]
+    post = list(Post.objects().search_text(query).order_by('$text_score').aggregate(pipeline))
+    post = json_util.dumps(post)
+    print(post)
+    if post:
+        return post, 200
+    else:
+        return jsonify({"error": "No Post Exist"}), 500
 
 
 # search post by tags
