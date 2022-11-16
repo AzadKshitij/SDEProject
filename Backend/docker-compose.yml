@@ -16,6 +16,8 @@ services:
     
     links:
       - db
+    
+    network_mode: host
 
     environment:
       - FLASK_APP=run.py
@@ -37,7 +39,11 @@ services:
 
   nginx:
     build: ./nginx
+    environment:
+      - SERVER_NAME=0.0.0.0
     ports:
       - 1337:80
     depends_on:
       - web
+    restart: always
+    network_mode: host
