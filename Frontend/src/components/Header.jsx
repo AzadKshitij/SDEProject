@@ -52,7 +52,7 @@ function Header() {
 				<div className=" float-left block ">
 					<Link to="/">
 						<span className=" cursor-pointer text-2xl font-bold  text-black md:text-4xl">
-							AVIATO
+							JustBlog
 						</span>
 					</Link>
 				</div>

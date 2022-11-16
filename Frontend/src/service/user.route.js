@@ -1,7 +1,7 @@
 import service from "./index";
 import axios from "axios";
 
-const BASE_URL = "http://65.0.108.6:1337/";
+const BASE_URL = "http://65.0.108.6:1337";
 
 // Get Routes
 
