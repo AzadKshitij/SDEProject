@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const baseURL = "http://127.0.0.1:5000/";
+const baseURL = "http://65.0.108.6:1337/";
 
 const service = axios.create({
-  baseURL: baseURL,
-  timeout: 5000,
+	baseURL: baseURL,
+	timeout: 5000,
 });
 
 export default service;
