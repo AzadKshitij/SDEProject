@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React from "react";
 import BlogCard from "./BlogCard";
-import service from "../service";
+// import service from "../service";
 import { getAllData } from "../service/post.route";
 
 function Blogs() {

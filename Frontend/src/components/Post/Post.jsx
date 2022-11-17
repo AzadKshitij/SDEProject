@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getOneData } from "../../service/post.route";
-import { Link } from "react-router-dom";
-import { Card, CardBody, CardText, Col, Container, Row } from "reactstrap";
+// import { Link } from "react-router-dom";
+// import { Card, CardBody, CardText, Col, Container, Row } from "reactstrap";
 import Avatar from "@mui/material/Avatar";
 // import "./Post.css";
 
